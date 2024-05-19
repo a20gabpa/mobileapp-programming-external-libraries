@@ -1,42 +1,35 @@
-
 # Rapport
+Det första steget var, likt tidigare, att skapa en fork av projektet på LenaSYS Github. Först ut var att hitta ett externt bibliotek som kan användas, efter några sökningar hittades ett bibliotek som heter _Picasso_ vilket är ett bibliotek som används för bland annat för hantering av bilder. För detta valdes version 2.5.2. Att inkludera detta bibliotek gjorden genom att lägga till det i _dependencies_ i _app/build.gradle_. 
 
-**Skriv din rapport här!**
-
-_Du kan ta bort all text som finns sedan tidigare_.
-
-## Följande grundsyn gäller dugga-svar:
-
-- Ett kortfattat svar är att föredra. Svar som är längre än en sida text (skärmdumpar och programkod exkluderat) är onödigt långt.
-- Svaret skall ha minst en snutt programkod.
-- Svaret skall inkludera en kort övergripande förklarande text som redogör för vad respektive snutt programkod gör eller som svarar på annan teorifråga.
-- Svaret skall ha minst en skärmdump. Skärmdumpar skall illustrera exekvering av relevant programkod. Eventuell text i skärmdumpar måste vara läsbar.
-- I de fall detta efterfrågas, dela upp delar av ditt svar i för- och nackdelar. Dina för- respektive nackdelar skall vara i form av punktlistor med kortare stycken (3-4 meningar).
-
-Programkod ska se ut som exemplet nedan. Koden måste vara korrekt indenterad då den blir lättare att läsa vilket gör det lättare att hitta syntaktiska fel.
-
+**build.gradle**
 ```
-function errorCallback(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            // Geolocation API stöds inte, gör något
-            break;
-        case error.POSITION_UNAVAILABLE:
-            // Misslyckat positionsanrop, gör något
-            break;
-        case error.UNKNOWN_ERROR:
-            // Okänt fel, gör något
-            break;
-    }
-}
+    ...
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    ...
 ```
 
-Bilder läggs i samma mapp som markdown-filen.
+Nästa steg var därefter att lägga till en vy för bilder på startskärmen samt uppdatera _AndroidManifest.xml_ för att tillåta tillgång till internet. Detta gjordes likt tidigare med att lägga till en extra rad i filen.
 
-![](android.png)
+**AndroidManifest.xml**
+```
+    ...
+    <uses-permission android:name="android.permission.INTERNET" />
+    ...
+```
 
-Läs gärna:
+Sista steget var att använda det externa biblioteket _Picasso_ för att uppdatera/ladda in en bild i vyn. För att göra processen enklare, användes en sida som returnerar slumpmässiga bilder varje gång av en specifierad storlek (Länk: https://picsum.photos/600/900). Med hjälp av lite dokumentation samt kod för att komma åt _ImageView_ kunde man ladda in en bild via _Picasso_. 
 
-- Boulos, M.N.K., Warren, J., Gong, J. & Yue, P. (2010) Web GIS in practice VIII: HTML5 and the canvas element for interactive online mapping. International journal of health geographics 9, 14. Shin, Y. &
-- Wunsche, B.C. (2013) A smartphone-based golf simulation exercise game for supporting arthritis patients. 2013 28th International Conference of Image and Vision Computing New Zealand (IVCNZ), IEEE, pp. 459–464.
-- Wohlin, C., Runeson, P., Höst, M., Ohlsson, M.C., Regnell, B., Wesslén, A. (2012) Experimentation in Software Engineering, Berlin, Heidelberg: Springer Berlin Heidelberg.
+**MainActivity.java**
+```
+
+    // Get reference to image
+    imageView = findViewById(R.id.imageView);
+    // Using Picasso, update the image
+    Picasso.with(this).load(randomImage).into(imageView);
+```
+
+Skärmklipp på huvudskärmen fast med annan slumpmässig bild, _MainActivity_:
+![Screenshot_20240519_223426](https://github.com/a20gabpa/mobileapp-programming-external-libraries/assets/102604680/f0cc367f-ecad-423a-8d87-f37170c4f9ee)
+
+Skärmklipp på huvudskärmen fast med annan slumpmässig bild, _MainActivity_: 
+![Screenshot_20240519_223556](https://github.com/a20gabpa/mobileapp-programming-external-libraries/assets/102604680/5a8d10ce-d30a-48de-ac30-7f347a2a0558)
